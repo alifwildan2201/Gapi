@@ -1,0 +1,66 @@
+import { useState, useEffect } from "react";
+
+interface Airdrop {
+  name: string;
+  deadline: string;
+  reward: string;
+  status: string;
+  twitterHandle: string;
+}
+
+export default function Home() {
+  const [airdrops, setAirdrops] = useState<Airdrop[]>([]);
+
+  useEffect(() => {
+    setAirdrops([
+      {
+        name: "Project X",
+        deadline: "2025-04-30",
+        reward: "100 $X",
+        status: "Open",
+        twitterHandle: "projectx"
+      },
+      {
+        name: "Project Y",
+        deadline: "2025-05-05",
+        reward: "50 $Y",
+        status: "Closed",
+        twitterHandle: "projecty"
+      },
+      {
+        name: "Project Z",
+        deadline: "2025-04-20",
+        reward: "200 $Z",
+        status: "Open",
+        twitterHandle: "projectz"
+      },
+    ]);
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-4xl font-bold mb-6 text-center">Crypto Airdrop Tracker</h1>
+        <ul className="space-y-4">
+          {airdrops.map((airdrop, idx) => (
+            <li key={idx} className="p-4 bg-white rounded-xl shadow-md flex items-center space-x-4">
+              <img
+                src={`https://unavatar.io/twitter/${airdrop.twitterHandle}`}
+                alt={`${airdrop.name} logo`}
+                className="w-12 h-12 rounded-full"
+              />
+              <div>
+                <h2 className="text-2xl font-semibold">{airdrop.name}</h2>
+                <p className="text-gray-700">Reward: {airdrop.reward}</p>
+                <p className="text-gray-700">Deadline: {airdrop.deadline}</p>
+                <p className={`text-sm font-medium ${airdrop.status === 'Open' ? 'text-green-600' : 'text-red-600'}`}>
+                  Status: {airdrop.status}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
+  );
+}
